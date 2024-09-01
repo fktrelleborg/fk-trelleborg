@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom'
 import "./LoginSignup.css";
 
 const LoginSignup = () => {
@@ -41,7 +42,7 @@ const LoginSignup = () => {
         <></>
       ) : (
         <div className="forgot-password">
-          Lost your password <span>click here</span>
+          Lost your password <Link className="link" to="/forgot-password">click here</Link>
         </div>
       )}
       <div className="submit-container">
