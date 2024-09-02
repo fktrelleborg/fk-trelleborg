@@ -73,28 +73,3 @@
   cursor: pointer;
   text-decoration: none;
 }
-
-.submit-container {
-  display: flex;
-  gap: 30px;
-  margin: 60px auto;
-}
-
-.submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 220px;
-  height: 59px;
-  color: #fff;
-  background: #92c3a9;
-  border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.gray {
-  background: #eaeaea;
-  color: #676767;
-}

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
+import { SubmitContainer } from "../Styled/SubmitContainer";
+
 import "./LoginSignup.css";
 
 const LoginSignup = () => {
@@ -42,23 +48,30 @@ const LoginSignup = () => {
         <></>
       ) : (
         <div className="forgot-password">
-          Lost your password <Link className="link" to="/forgot-password">click here</Link>
+          Lost your password{" "}
+          <Link className="link" to="/forgot-password">
+            click here
+          </Link>
         </div>
       )}
-      <div className="submit-container">
-        <div
-          className={action === LOGIN ? "submit gray" : "submit"}
-          onClick={() => setAction(SIGN_UP)}
-        >
-          Sign Up
-        </div>
-        <div
-          className={action === SIGN_UP ? "submit gray" : "submit"}
-          onClick={() => setAction(LOGIN)}
-        >
-          Login
-        </div>
-      </div>
+      <SubmitContainer>
+        <Stack spacing={2} direction="row">
+          <Button
+            type="button"
+            variant="contained"
+            onClick={() => setAction(SIGN_UP)}
+          >
+            Sign Up
+          </Button>
+          <Button
+            type="button"
+            variant="contained"
+            onClick={() => setAction(LOGIN)}
+          >
+            Send Reset Link
+          </Button>
+        </Stack>
+      </SubmitContainer>
     </div>
   );
 };
