@@ -9,7 +9,7 @@ import { SubmitContainer } from "../Styled/SubmitContainer";
 import "./LoginSignup.css";
 
 const LoginSignup = () => {
-  //shallow login component with some basic toggling and temp styling
+  // shallow login component with some basic toggling and temp styling
   // TODO: Clean it up a bit, check with UX, start adding login/registry logic with BE etc...
 
   const SIGN_UP = "Sign up";
