@@ -22,10 +22,10 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       - name: Run tests
-        run: npm test
+        run: yarn test
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       - name: Build the project
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build  # This should be the directory where your build output is located
+          publish_dir: ./dist  # This should be the directory where your build output is located
