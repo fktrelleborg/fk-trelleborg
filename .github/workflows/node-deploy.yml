@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Deploy only when code is pushed to the main branch
+      - main # Deploy only when code is pushed to the main branch
 
 jobs:
   deploy:
@@ -11,16 +11,23 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: npm install
 
       - name: Build the project
-        run: npm run build  # This should generate the /dist directory
+        run: npm run build # This should generate the /dist directory
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist folder
+          path: "./dist"
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Updated to use the /dist directory
+        id: deployment
+        uses: actions/deploy-pages@v4
