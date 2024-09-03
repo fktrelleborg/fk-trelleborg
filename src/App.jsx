@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <Router basename={"/fk-trelleborg/"}>
       <Routes>
         <Route path="/" element={<LoginSignup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
