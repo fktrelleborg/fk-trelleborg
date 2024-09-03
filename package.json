@@ -2,7 +2,7 @@
   "name": "fk-trelleborg",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://fk-trelleborg.github.io/fk-trelleborg",
+  "homepage": "https://fktrelleborg.github.io/fk-trelleborg",
   "type": "module",
   "scripts": {
     "dev": "vite",
