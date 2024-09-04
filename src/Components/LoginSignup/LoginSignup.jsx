@@ -68,7 +68,7 @@ const LoginSignup = () => {
             variant="contained"
             onClick={() => setAction(LOGIN)}
           >
-            Send Reset Link
+            Login
           </Button>
         </Stack>
       </SubmitContainer>
