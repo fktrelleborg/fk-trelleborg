@@ -5,9 +5,9 @@ import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import { SubmitContainer } from "../Styled/SubmitContainer";
+import { SubmitContainer } from "../styled/SubmitContainer";
 
-import "../LoginSignup/LoginSignup.css";
+import "../loginSignup/LoginSignup.css";
 import "./ForgotPassword.css";
 
 export const StyledForm = styled.form`
@@ -56,7 +56,9 @@ const ForgotPassword = () => {
             <Button type="button" variant="contained" onClick={handleBack}>
               Back
             </Button>
-            <Button type="submit" variant="contained">Send Reset Link</Button>
+            <Button type="submit" variant="contained">
+              Send Reset Link
+            </Button>
           </Stack>
         </SubmitContainer>
       </StyledForm>

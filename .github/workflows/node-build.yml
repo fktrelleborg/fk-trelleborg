@@ -22,6 +22,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Build library
+        run: |
+          yarn --frozen-lockfile
+          yarn build
+
+      - name: Run tests
+        run: yarn test
