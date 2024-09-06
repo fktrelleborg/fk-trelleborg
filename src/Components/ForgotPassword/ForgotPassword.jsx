@@ -56,7 +56,9 @@ const ForgotPassword = () => {
             <Button type="button" variant="contained" onClick={handleBack}>
               Back
             </Button>
-            <Button type="submit" variant="contained">Send Reset Link</Button>
+            <Button type="submit" variant="contained">
+              Send Reset Link
+            </Button>
           </Stack>
         </SubmitContainer>
       </StyledForm>

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Adding this since if anyone happens to generate an npm file locally, it wont be committed. We use yarn
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
