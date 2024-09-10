@@ -22,9 +22,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Build library
+        run: |
+          yarn --frozen-lockfile
+          yarn build
+
+      - name: Run tests
+        run: yarn test
   deploy:
     runs-on: ubuntu-latest
 
@@ -33,10 +41,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
-      - name: Build the project
-        run: npm run build # This should generate the /dist directory
+      - name: Build library
+        run: yarn build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
