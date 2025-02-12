@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirebaseApp } from '../../services/firebase';
+import { getFirebaseApp } from '../../services/firebase/firebase';
 import { useNavigate, useLocation } from "react-router-dom";
 
 function withAuthProtection(WrappedComponent) {
