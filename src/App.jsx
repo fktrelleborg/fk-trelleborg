@@ -1,20 +1,33 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import LoginSignup from "./Components/LoginSignup/LoginSignup";
-import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import { Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import HomePage from "./pages/HomePAge";
+import LogOutPage from "./pages/LogOutPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import useAuth from "./hooks/useAuth";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
 
-import "./App.css";
+import "./css/App.css";
 
 function App() {
+  const { currentUser } = useAuth();
+
   return (
-    <Router basename={"/fk-trelleborg/"}>
-      {/* <Header /> */}
+    <div>
+      {currentUser && <Header />}
+
       <Routes>
-        <Route path="/" element={<LoginSignup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/logout" element={<LogOutPage />} />
+          <Route path="/home" element={<HomePage />} />
+        </Route>
       </Routes>
-    </Router>
+    </div>
   );
 }
 
