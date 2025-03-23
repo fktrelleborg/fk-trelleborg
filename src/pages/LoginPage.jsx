@@ -1,10 +1,9 @@
 import { useForm } from "react-hook-form";
 import { FirebaseError } from "firebase/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-// import keyIcon from "../icons/key.svg";
 
 import "../css/LoginSignup.css";
 
@@ -23,10 +22,9 @@ const LoginPage = () => {
 
     try {
       await login(data.email, data.password);
-
-      alert("Logged in successfully!");
       navigate("/home");
     } catch (err) {
+      console.log(err)
       if (err instanceof FirebaseError) {
         alert(err.message);
       } else if (err instanceof Error) {
@@ -38,6 +36,11 @@ const LoginPage = () => {
 
     setIsLoggingIn(false);
   };
+  // Ta in användare ifall den redan är inloggad.
+  // useEffect(() => {
+  //   if(currentUser)
+  // }
+  // , []);
 
   return (
     <div className="container">
@@ -47,12 +50,6 @@ const LoginPage = () => {
       </div>
       <form onSubmit={handleSubmit(onLogin)}>
         <div className="inputs">
-          <div className="input">
-            <div className="img" />
-            <input type="text" placeholder="Name" {...register("name", { required: "Name is required!" })} />
-            {errors.name && <span className="text-danger">{errors.name.message}</span>}
-          </div>
-
           <div className="input">
             {/* TODO: insert icon? */}
             <div className="img" />
@@ -71,12 +68,11 @@ const LoginPage = () => {
             />
             {errors.password && <span className="text-danger">{errors.password.message || "Invalid password"}</span>}
           </div>
-        </div>
-
-        <div className="submit-container">
+          <div className="submit-container">
           <Button type="submit" variant="contained" disabled={isLoggingIn}>
             {isLoggingIn ? "Logging in..." : "Login"}
           </Button>
+        </div>
         </div>
       </form>
       <div className="forgot-password">

@@ -16,8 +16,8 @@ export const StyledHeader = styled.header`
 
 export const HeaderNav = styled.nav`
   display: flex;
-  justify-content: center;
-  width. 100%;
+  justify-content: start;
+  width: 100%;
 `;
 
 export const HeaderUl = styled.ul`
@@ -37,3 +37,4 @@ export const HeaderLi = (props) => {
 
   return <StyledLi>{props.children}</StyledLi>;
 };
+

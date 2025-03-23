@@ -39,7 +39,7 @@ const AuthContextProvider = ({ children }) => {
 			return false;
 		}
 
-		setUserName(currentUser.displayName);
+		setUserName(extractFullName(currentUser.email));
 		setUserEmail(currentUser.email);
 
 		return true;
@@ -72,6 +72,23 @@ const AuthContextProvider = ({ children }) => {
 	const signup = (email, password) => {
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
+
+	function extractFullName(email) {
+		const match = email.match(/^([a-zA-Z]+)\.([a-zA-Z0-9]+)@/);
+		if (match) {
+			let firstName = match[1];
+			let lastName = match[2];
+			
+			// Capitalize first letter of each name
+			firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+			lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+	
+			return `${firstName} ${lastName}`;
+		}
+		return null; // Return null if the format is incorrect
+	}
+	
+	
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (admin) => {

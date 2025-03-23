@@ -14,10 +14,8 @@ const LoginSignup = () => {
 		try {
 			if (action === "Login") {
 				await login(data.email, data.password);
-				alert("Logged in successfully!");
 			} else {
 				await signup(data.email, data.password);
-				alert("Signed up successfully!");
 			}
 		} catch (error) {
 			const errorMessage = error.message || "An error occurred!";

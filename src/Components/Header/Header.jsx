@@ -14,13 +14,13 @@ const Header = () => {
             <HeaderLi>
               <Button variant="text">Kalender</Button>
             </HeaderLi>
-            <HeaderLi>
-              <Link end to={"/logout"}>
-                Logout
-              </Link>
-            </HeaderLi>
           </HeaderUl>
         </HeaderNav>
+        <Button variant="text">
+          <Link end to={"/logout"}>
+                Logga ut
+          </Link>
+        </Button>
       </StyledHeader>
     </div>
   );

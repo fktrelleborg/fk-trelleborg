@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import HomePage from "./pages/HomePAge";
+import HomePage from "./pages/HomePage";
 import LogOutPage from "./pages/LogOutPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import useAuth from "./hooks/useAuth";
