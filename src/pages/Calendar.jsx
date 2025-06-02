@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Paper, Grid, IconButton, Button } from '@mui/material';
@@ -6,6 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
+import { getAllBookingMonths } from '../services/bookingService';
 
 const CalendarContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -83,10 +84,22 @@ const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [homeActive, setHomeActive] = useState(false);
   const [jobActive, setJobActive] = useState(false);
+  const [bookingMonths, setBookingMonths] = useState([]);
+  const [homeCount, setHomeCount] = useState(0);
+  const [jobCount, setJobCount] = useState(0);
 
-  // Example variables for the button numbers
-  const homeCount = 3; // Replace with your dynamic value if needed
-  const jobCount = 7;  // Replace with your dynamic value if needed
+  useEffect(() => {
+    const fetchMonths = async () => {
+      try {
+        const months = await getAllBookingMonths();
+        setBookingMonths(months);
+        console.log('Booking months:', months);
+      } catch (error) {
+        console.error('Failed to fetch booking months:', error);
+      }
+    };
+    fetchMonths();
+  }, []);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -98,6 +111,32 @@ const Calendar = () => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
+
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthKey = `${year}-${month}`;
+    const dateKey = `${year}-${month}-${day}`;
+
+    // Find the month object
+    const monthObj = bookingMonths.find((m) => m.month === monthKey);
+
+    // Find the booking for the selected date
+    let atHomeCount = 0;
+    let atOfficeCount = 0;
+    if (monthObj) {
+      const booking = monthObj.bookings.find((b) => b.id === dateKey);
+      if (booking && Array.isArray(booking.at_home)) {
+        atHomeCount = booking.at_home.length;
+      }
+      if (booking && Array.isArray(booking.at_office)) {
+        atOfficeCount = booking.at_office.length;
+      }
+    }
+    setHomeCount(atHomeCount);
+    setJobCount(atOfficeCount);
+
     console.log('Selected date:', date);
     console.log('Formatted date:', format(date, 'yyyy-MM-dd'));
   };

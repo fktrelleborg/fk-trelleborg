@@ -205,3 +205,37 @@ export const getBookingsByDate = async (date) => {
     throw error;
   }
 };
+
+// Get all unique months (YYYY-MM) for which there are bookings, and include booking data for each month
+export const getAllBookingMonths = async () => {
+  try {
+    const q = query(collection(db, "bookings"));
+    const querySnapshot = await getDocs(q);
+
+    // Group bookings by month
+    const monthMap = {};
+
+    querySnapshot.docs.forEach((doc) => {
+      const bookingDate = doc.id; // format: YYYY-MM-DD
+      const [year, month] = bookingDate.split('-');
+      if (year && month) {
+        const monthKey = `${year}-${month}`;
+        if (!monthMap[monthKey]) {
+          monthMap[monthKey] = [];
+        }
+        monthMap[monthKey].push({
+          id: bookingDate,
+          ...doc.data(),
+        });
+      }
+    });
+
+    // Return an array of { month: 'YYYY-MM', bookings: [...] }
+    return Object.entries(monthMap)
+      .map(([month, bookings]) => ({ month, bookings }))
+      .sort((a, b) => a.month.localeCompare(b.month));
+  } catch (error) {
+    console.error("Error getting all booking months:", error);
+    throw error;
+  }
+};
