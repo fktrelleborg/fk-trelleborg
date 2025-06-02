@@ -22,9 +22,10 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 const createCollection = (collectionName) => {
-	return collection(db, collectionName);
+  return collection(db, collectionName);
 };
 
 export const sigupUserCol = createCollection("users");
+export const bookingsCol = createCollection("bookings");
 
 export default app;
