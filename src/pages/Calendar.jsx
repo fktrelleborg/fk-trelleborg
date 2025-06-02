@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Box, Typography, Paper, Grid, IconButton, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import HomeIcon from '@mui/icons-material/Home';
+import WorkIcon from '@mui/icons-material/Work';
 
 const CalendarContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -23,15 +25,25 @@ const CalendarGrid = styled(Grid)(({ theme }) => ({
   gap: theme.spacing(1),
 }));
 
-const CalendarDay = styled(Box)(({ theme, isCurrentMonth, isToday, isSelected }) => ({
+const CalendarDay = styled(
+  Box,
+  {
+    shouldForwardProp: (prop) =>
+      prop !== 'isCurrentMonth' && prop !== 'isToday' && prop !== 'isSelected'
+  }
+)(({ theme, isCurrentMonth, isToday, isSelected }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
   cursor: 'pointer',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: isSelected ? theme.palette.primary.main : 'transparent',
-  color: isSelected ? theme.palette.primary.contrastText : 
-         isToday ? theme.palette.primary.main :
-         isCurrentMonth ? theme.palette.text.primary : theme.palette.text.disabled,
+  color: isSelected
+    ? theme.palette.primary.contrastText
+    : isToday
+    ? theme.palette.primary.main
+    : isCurrentMonth
+    ? theme.palette.text.primary
+    : theme.palette.text.disabled,
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
   },
@@ -69,6 +81,12 @@ const ButtonContainer = styled(Box)(({ theme }) => ({
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [homeActive, setHomeActive] = useState(false);
+  const [jobActive, setJobActive] = useState(false);
+
+  // Example variables for the button numbers
+  const homeCount = 3; // Replace with your dynamic value if needed
+  const jobCount = 7;  // Replace with your dynamic value if needed
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -92,12 +110,18 @@ const Calendar = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  const handleButton1Click = () => {
-    console.log('Button 1 clicked for date:', format(selectedDate, 'yyyy-MM-dd'));
+  const handleHomeClick = () => {
+    setHomeActive((prev) => {
+      if (!prev) setJobActive(false); // If turning ON, turn the other OFF
+      return !prev;
+    });
   };
 
-  const handleButton2Click = () => {
-    console.log('Button 2 clicked for date:', format(selectedDate, 'yyyy-MM-dd'));
+  const handleJobClick = () => {
+    setJobActive((prev) => {
+      if (!prev) setHomeActive(false); // If turning ON, turn the other OFF
+      return !prev;
+    });
   };
 
   return (
@@ -139,11 +163,19 @@ const Calendar = () => {
           {format(selectedDate, 'EEEE d MMMM yyyy')}
         </SelectedDateDisplay>
         <ButtonContainer>
-          <Button variant="contained" onClick={handleButton1Click}>
-            Button 1
+          <Button 
+            variant={homeActive ? 'contained' : 'outlined'} 
+            color={homeActive ? 'primary' : 'inherit'}
+            onClick={handleHomeClick} 
+            startIcon={<HomeIcon />}>
+            {homeCount}
           </Button>
-          <Button variant="contained" onClick={handleButton2Click}>
-            Button 2
+          <Button 
+            variant={jobActive ? 'contained' : 'outlined'} 
+            color={jobActive ? 'primary' : 'inherit'}
+            onClick={handleJobClick} 
+            startIcon={<WorkIcon />}>
+            {jobCount}
           </Button>
         </ButtonContainer>
       </ActionButtonsContainer>

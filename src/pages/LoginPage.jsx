@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     try {
       await login(data.email, data.password);
-      navigate("/home");
+      navigate("/calendar");
     } catch (err) {
       console.log(err)
       if (err instanceof FirebaseError) {
