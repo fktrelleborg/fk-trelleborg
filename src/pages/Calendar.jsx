@@ -7,6 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
 import { getAllBookingMonths } from '../services/bookingService';
+import { useAuth } from '../contexts/AuthContextProvider';
 
 const CalendarContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -80,6 +81,7 @@ const ButtonContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Calendar = () => {
+  const { currentUser } = useAuth();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [homeActive, setHomeActive] = useState(false);
@@ -93,7 +95,6 @@ const Calendar = () => {
       try {
         const months = await getAllBookingMonths();
         setBookingMonths(months);
-        console.log('Booking months:', months);
       } catch (error) {
         console.error('Failed to fetch booking months:', error);
       }
@@ -125,20 +126,27 @@ const Calendar = () => {
     // Find the booking for the selected date
     let atHomeCount = 0;
     let atOfficeCount = 0;
+    let userIsAtOffice = false;
+    let userIsAtHome = false;
     if (monthObj) {
       const booking = monthObj.bookings.find((b) => b.id === dateKey);
       if (booking && Array.isArray(booking.at_home)) {
         atHomeCount = booking.at_home.length;
+        if (currentUser && booking.at_home.includes(currentUser.uid)) {
+          userIsAtHome = true;
+        }
       }
       if (booking && Array.isArray(booking.at_office)) {
         atOfficeCount = booking.at_office.length;
+        if (currentUser && booking.at_office.includes(currentUser.uid)) {
+          userIsAtOffice = true;
+        }
       }
     }
     setHomeCount(atHomeCount);
     setJobCount(atOfficeCount);
-
-    console.log('Selected date:', date);
-    console.log('Formatted date:', format(date, 'yyyy-MM-dd'));
+    setHomeActive(userIsAtHome);
+    setJobActive(userIsAtOffice);
   };
 
   const handlePreviousMonth = () => {
@@ -198,9 +206,7 @@ const Calendar = () => {
       </CalendarGrid>
 
       <ActionButtonsContainer>
-        <SelectedDateDisplay variant="h5">
-          {format(selectedDate, 'EEEE d MMMM yyyy')}
-        </SelectedDateDisplay>
+        <br />
         <ButtonContainer>
           <Button 
             variant={homeActive ? 'contained' : 'outlined'} 

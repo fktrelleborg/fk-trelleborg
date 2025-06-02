@@ -8,7 +8,7 @@ import {
 	updatePassword,
 	updateProfile,
 } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { auth } from "../services/firebase/firebase.js";
 import PropTypes from 'prop-types';
 
@@ -135,3 +135,5 @@ AuthContextProvider.propTypes = {
 };
 
 export default AuthContextProvider;
+
+export const useAuth = () => useContext(AuthContext);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useAuth as useAuthContext } from "../contexts/AuthContextProvider";
 
 import "../css/LoginSignup.css";
 
@@ -15,7 +16,14 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
   const { login } = useAuth();
+  const { currentUser } = useAuthContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/calendar");
+    }
+  }, [currentUser, navigate]);
 
   const onLogin = async (data) => {
     setIsLoggingIn(true);
@@ -36,7 +44,7 @@ const LoginPage = () => {
 
     setIsLoggingIn(false);
   };
-  // Ta in användare ifall den redan är inloggad.
+  // Ta invändare ifall den redan är inloggad.
   // useEffect(() => {
   //   if(currentUser)
   // }
