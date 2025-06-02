@@ -12,7 +12,9 @@ const Header = () => {
               <h2>FK Trelleborg</h2>
             </HeaderLi>
             <HeaderLi>
-              <Button variant="text">Kalender</Button>
+              <Button variant="text" component={Link} to="/calendar">
+                Kalender
+              </Button>
             </HeaderLi>
           </HeaderUl>
         </HeaderNav>
