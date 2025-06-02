@@ -2,6 +2,8 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { StyledHeader, HeaderNav, HeaderUl, HeaderLi } from "./HeaderStyles";
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
+
 const Header = () => {
   return (
     <div>
@@ -18,10 +20,8 @@ const Header = () => {
             </HeaderLi>
           </HeaderUl>
         </HeaderNav>
-        <Button variant="text">
-          <Link end to={"/logout"}>
-                Logga ut
-          </Link>
+        <Button variant="text" component={Link} to="/logout">
+          <LogoutIcon />
         </Button>
       </StyledHeader>
     </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, addMonths, subMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns';
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Paper, Grid, IconButton } from '@mui/material';
+import { Box, Typography, Paper, Grid, IconButton, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -44,18 +44,44 @@ const NavigationButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
+const ActionButtonsContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(2),
+  marginBottom: theme.spacing(3),
+  padding: theme.spacing(2),
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: theme.shape.borderRadius,
+}));
+
+const SelectedDateDisplay = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  textAlign: 'center',
+  fontWeight: 'bold',
+}));
+
+const ButtonContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(2),
+  justifyContent: 'center',
+}));
+
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
-  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+  const startDate = startOfWeek(monthStart, { weekStartsOn: 1 }); // Monday
+  const endDate = endOfWeek(monthEnd, { weekStartsOn: 1 }); // Sunday
+  const days = eachDayOfInterval({ start: startDate, end: endDate });
 
   const weekDays = ['Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör', 'Sön'];
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
+    console.log('Selected date:', date);
+    console.log('Formatted date:', format(date, 'yyyy-MM-dd'));
   };
 
   const handlePreviousMonth = () => {
@@ -64,6 +90,14 @@ const Calendar = () => {
 
   const handleNextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
+  };
+
+  const handleButton1Click = () => {
+    console.log('Button 1 clicked for date:', format(selectedDate, 'yyyy-MM-dd'));
+  };
+
+  const handleButton2Click = () => {
+    console.log('Button 2 clicked for date:', format(selectedDate, 'yyyy-MM-dd'));
   };
 
   return (
@@ -99,6 +133,20 @@ const Calendar = () => {
           </CalendarDay>
         ))}
       </CalendarGrid>
+
+      <ActionButtonsContainer>
+        <SelectedDateDisplay variant="h5">
+          {format(selectedDate, 'EEEE d MMMM yyyy')}
+        </SelectedDateDisplay>
+        <ButtonContainer>
+          <Button variant="contained" onClick={handleButton1Click}>
+            Button 1
+          </Button>
+          <Button variant="contained" onClick={handleButton2Click}>
+            Button 2
+          </Button>
+        </ButtonContainer>
+      </ActionButtonsContainer>
     </CalendarContainer>
   );
 };
