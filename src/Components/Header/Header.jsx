@@ -12,13 +12,17 @@ const Header = () => {
               <h2>FK Trelleborg</h2>
             </HeaderLi>
             <HeaderLi>
-              <Button variant="text">Kalender</Button>
+              <Button variant="text">
+                <Link end to="/calendar">
+                  Kalender
+                </Link>
+              </Button>
             </HeaderLi>
           </HeaderUl>
         </HeaderNav>
         <Button variant="text">
           <Link end to={"/logout"}>
-                Logga ut
+            Logga ut
           </Link>
         </Button>
       </StyledHeader>

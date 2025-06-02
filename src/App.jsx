@@ -5,6 +5,7 @@ import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
 import LogOutPage from "./pages/LogOutPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import Calendar from "./pages/Calendar";
 import useAuth from "./hooks/useAuth";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
 
@@ -25,6 +26,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/logout" element={<LogOutPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Route>
       </Routes>
     </div>
